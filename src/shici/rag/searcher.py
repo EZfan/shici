@@ -12,8 +12,9 @@ from pathlib import Path
 from typing import Any
 
 try:
-    from sentence_transformers import SentenceTransformer
     import chromadb
+    from sentence_transformers import SentenceTransformer
+
     _HAS_DEPS = True
 except ImportError:  # pragma: no cover
     SentenceTransformer = None  # type: ignore[assignment]
@@ -35,14 +36,11 @@ class CorpusSearcher:
         model_name: str = _DEFAULT_MODEL,
     ) -> None:
         if not _HAS_DEPS:
-            raise ImportError(
-                "RAG requires the 'rag' extra: uv add shici --extra rag"
-            )
+            raise ImportError("RAG requires the 'rag' extra: uv add shici --extra rag")
         self.index_dir = Path(index_dir or _INDEX_DIR)
         if not self.index_dir.exists():
             raise FileNotFoundError(
-                f"Index not found at {self.index_dir}. "
-                "Run `shici index` to build it."
+                f"Index not found at {self.index_dir}. Run `shici index` to build it."
             )
         self.client = chromadb.PersistentClient(path=str(self.index_dir))
         self.collection = self.client.get_collection(name="poetry_lines")
@@ -59,13 +57,15 @@ class CorpusSearcher:
         for i, (doc, meta, dist) in enumerate(
             zip(result["documents"][0], result["metadatas"][0], result["distances"][0])
         ):
-            hits.append({
-                "line": doc,
-                "author": meta.get("author", ""),
-                "title": meta.get("title", ""),
-                "source": meta.get("source", ""),
-                "score": 1.0 - float(dist),  # cosine similarity
-            })
+            hits.append(
+                {
+                    "line": doc,
+                    "author": meta.get("author", ""),
+                    "title": meta.get("title", ""),
+                    "source": meta.get("source", ""),
+                    "score": 1.0 - float(dist),  # cosine similarity
+                }
+            )
         return hits
 
 
@@ -80,9 +80,7 @@ def build_index(
     Returns the number of indexed documents.
     """
     if not _HAS_DEPS:
-        raise ImportError(
-            "RAG requires the 'rag' extra: uv add shici --extra rag"
-        )
+        raise ImportError("RAG requires the 'rag' extra: uv add shici --extra rag")
     source_dir = Path(source_dir)
     index_dir = Path(index_dir or _INDEX_DIR)
     index_dir.mkdir(parents=True, exist_ok=True)
@@ -104,14 +102,17 @@ def build_index(
                 if not raw.strip():
                     continue
                 import json
+
                 rec = json.loads(raw)
                 docs.append(rec["line"])
-                metas.append({
-                    "author": rec.get("author", ""),
-                    "title": rec.get("title", ""),
-                    "source": jsonl_file.stem,
-                    "dynasty": rec.get("dynasty", ""),
-                })
+                metas.append(
+                    {
+                        "author": rec.get("author", ""),
+                        "title": rec.get("title", ""),
+                        "source": jsonl_file.stem,
+                        "dynasty": rec.get("dynasty", ""),
+                    }
+                )
                 ids.append(f"{jsonl_file.stem}:{line_no}")
 
                 if len(docs) >= batch_size:

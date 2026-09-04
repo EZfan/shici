@@ -7,24 +7,19 @@ and welcome banner.
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Iterable
 
+from rich import box
 from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
-from rich import box
-from rich.text import Text
-from rich.style import Style
 
 from .prosody import (
     CheckResult,
-    Issue,
     IssueLevel,
-    classify_character,
     Tone,
+    classify_character,
     lookup_rhyme,
 )
-
 
 console = Console()
 
@@ -40,9 +35,7 @@ def render_welcome() -> None:
                          |_|
 """
     console.print(f"[bold cyan]{ascii_art}[/bold cyan]")
-    console.print(
-        "[dim]古典诗词格律引擎 · 让 AI 写出严谨的诗[/dim]\n"
-    )
+    console.print("[dim]古典诗词格律引擎 · 让 AI 写出严谨的诗[/dim]\n")
 
 
 def read_poem_file(path: Path) -> list[str]:
@@ -100,15 +93,9 @@ def render_issues(result: CheckResult) -> None:
 
     for issue in result.issues:
         prefix = (
-            "[red]✗ 错误[/red]"
-            if issue.level == IssueLevel.ERROR
-            else "[yellow]! 警告[/yellow]"
+            "[red]✗ 错误[/red]" if issue.level == IssueLevel.ERROR else "[yellow]! 警告[/yellow]"
         )
-        loc = (
-            f"L{issue.line + 1}"
-            if issue.line >= 0
-            else "全局"
-        )
+        loc = f"L{issue.line + 1}" if issue.line >= 0 else "全局"
         if issue.column >= 0:
             loc = f"L{issue.line + 1}C{issue.column + 1}"
         table.add_row(
@@ -125,8 +112,10 @@ def render_character_tone_table(line: str) -> str:
     """Return a (char, tone_marker) table as a string."""
     chars = " ".join(c for c in line)
     markers = " ".join(
-        "平" if classify_character(c) == Tone.PING
-        else "仄" if classify_character(c) == Tone.ZE
+        "平"
+        if classify_character(c) == Tone.PING
+        else "仄"
+        if classify_character(c) == Tone.ZE
         else "·"
         for c in line
     )
@@ -144,10 +133,10 @@ def format_rhyme_table(char_to_check: str) -> None:
 
 __all__ = [
     "console",
-    "render_welcome",
-    "read_poem_file",
-    "render_poem_panel",
-    "render_issues",
-    "render_character_tone_table",
     "format_rhyme_table",
+    "read_poem_file",
+    "render_character_tone_table",
+    "render_issues",
+    "render_poem_panel",
+    "render_welcome",
 ]

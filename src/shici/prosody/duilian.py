@@ -14,10 +14,10 @@ POS table; semantic relatedness uses lightweight set comparison.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Sequence
 
 try:
     import jieba.posseg as pseg  # type: ignore[import]
+
     _HAS_JIEBA = True
 except ImportError:
     pseg = None  # type: ignore[assignment]
@@ -52,11 +52,11 @@ POS_CATEGORY: dict[str, str] = {
 class AntithesisReport:
     """Result of an antithesis check."""
 
-    score: float                  # 0.0 - 1.0
+    score: float  # 0.0 - 1.0
     length_match: bool
-    pos_match_ratio: float        # 0.0 - 1.0
-    tone_match_ratio: float       # 0.0 - 1.0
-    semantic_overlap: float       # 0.0 - 1.0 (lower is better)
+    pos_match_ratio: float  # 0.0 - 1.0
+    tone_match_ratio: float  # 0.0 - 1.0
+    semantic_overlap: float  # 0.0 - 1.0 (lower is better)
     structural_match: bool
     notes: list[str]
 
@@ -94,6 +94,7 @@ def _line_categories(line: str) -> list[str]:
 
 def _tone_sequence(line: str):
     from .classifier import classify_line
+
     return classify_line(line)
 
 
@@ -122,9 +123,7 @@ def check_antithesis(upper: str, lower: str) -> AntithesisReport:
     # 1. Length match
     length_match = len(upper) == len(lower)
     if not length_match:
-        notes.append(
-            f"字数不等: 上 {len(upper)} 字 vs 下 {len(lower)} 字"
-        )
+        notes.append(f"字数不等: 上 {len(upper)} 字 vs 下 {len(lower)} 字")
 
     if not length_match:
         return AntithesisReport(
@@ -141,8 +140,7 @@ def check_antithesis(upper: str, lower: str) -> AntithesisReport:
     upper_cats = _line_categories(upper)
     lower_cats = _line_categories(lower)
     pos_matches = sum(
-        1 for u, l in zip(upper_cats, lower_cats)
-        if u == l and u not in ("未识别", "其他")
+        1 for u, l in zip(upper_cats, lower_cats) if u == l and u not in ("未识别", "其他")
     )
     pos_match_ratio = pos_matches / len(upper_cats)
     if pos_match_ratio < 0.5:
@@ -197,6 +195,6 @@ def antithesis_score(upper: str, lower: str) -> float:
 
 __all__ = [
     "AntithesisReport",
-    "check_antithesis",
     "antithesis_score",
+    "check_antithesis",
 ]

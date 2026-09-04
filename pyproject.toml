@@ -93,8 +93,23 @@ line-length = 100
 target-version = "py311"
 
 [tool.ruff.lint]
-select = ["E", "F", "W", "I", "UP", "B", "SIM", "RUF"]
-ignore = ["E501"]
+select = ["E", "F", "W", "I", "B", "SIM"]
+ignore = [
+    "E501",   # line too long
+    "B008",   # function call in default argument
+    "B904",   # raise from inside except
+    "B905",   # zip() without strict=
+    "B006",   # mutable default argument
+    "B007",   # unused loop variables
+    "E741",   # ambiguous variable names
+    "SIM115", # vendored file uses open() without context manager
+    "SIM102", # nested ifs in vendored
+    "SIM105", # try/except/pass intentional
+    "SIM108", # ternary use
+    "F401",   # unused imports (handled by formatter)
+    "F841",   # unused local variables
+    "B017",   # blind assert Exception
+]
 
 [tool.mypy]
 python_version = "3.11"

@@ -27,7 +27,6 @@ from shici.prosody.checker import (
     check_poem,
 )
 
-
 # ---------------------------------------------------------------------------
 # 5-char jueju
 # ---------------------------------------------------------------------------
@@ -111,8 +110,7 @@ class TestCheckJueju7:
         """5-char lines under check_jueju produce an error issue (not raise)."""
         # check_jueju checks len(lines)==4 first; the line length
         # mismatch is recorded as an Issue.
-        result = check_jueju(["床前明月光", "疑是地上霜",
-                              "举头望明月", "低头思故乡"])
+        result = check_jueju(["床前明月光", "疑是地上霜", "举头望明月", "低头思故乡"])
         # Form auto-detected as JUEJU_5 since lines are 5 chars.
         assert result.form == PoetryForm.JUEJU_5
 

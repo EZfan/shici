@@ -13,8 +13,8 @@ from textual.containers import Container, Vertical
 from textual.screen import Screen
 from textual.widgets import Button, Static
 
-from ..app import BANNER
 from .. import __version__
+from ..app import BANNER
 
 __all__ = ["HomeScreen"]
 
@@ -38,10 +38,10 @@ class HomeScreen(Screen):
                 id="subtitle",
             )
             with Container(id="menu"):
-                    yield Button("生成诗词  (g)", id="btn-generate", classes="menu-button")
-                    yield Button("检查诗作  (c)", id="btn-check", classes="menu-button")
-                    yield Button("浏览词牌  (b)", id="btn-browse", classes="menu-button")
-                    yield Button("退出      (q)", id="btn-quit", classes="menu-button")
+                yield Button("生成诗词  (g)", id="btn-generate", classes="menu-button")
+                yield Button("检查诗作  (c)", id="btn-check", classes="menu-button")
+                yield Button("浏览词牌  (b)", id="btn-browse", classes="menu-button")
+                yield Button("退出      (q)", id="btn-quit", classes="menu-button")
             yield Static(
                 "键盘提示:  g 生成  ·  c 校验  ·  b 浏览  ·  h 首页  ·  q 退出",
                 id="status-bar",

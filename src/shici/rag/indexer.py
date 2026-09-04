@@ -61,8 +61,7 @@ def index_command(
         except ImportError as e:
             console.print(f"[red]{e}[/red]")
             console.print(
-                "[yellow]Install the rag extra:[/yellow] "
-                "[cyan]uv add shici --extra rag[/cyan]"
+                "[yellow]Install the rag extra:[/yellow] [cyan]uv add shici --extra rag[/cyan]"
             )
             raise typer.Exit(code=1) from None
         progress.update(task, completed=True)
@@ -92,6 +91,6 @@ def fetch_command(
         "  2. Run [cyan]python scripts/build_corpora.py[/cyan] to convert JSON "
         "to JSONL with one poem-line per record.\n"
         "Or place your own *.jsonl files under the source directory — each "
-        "line should be `{\"line\": \"...\", \"author\": \"...\", "
-        "\"title\": \"...\", \"dynasty\": \"...\"}`."
+        'line should be `{"line": "...", "author": "...", '
+        '"title": "...", "dynasty": "..."}`.'
     )

@@ -13,21 +13,21 @@ just booleans — the goal is to surface human-readable diagnostics.
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Sequence
 
 from .classifier import Tone, classify_character
-from .rhyme import RhymeGroup, RhymeBook, lookup_rhyme
+from .rhyme import RhymeBook, RhymeGroup, lookup_rhyme
 
 
 class PoetryForm(str, Enum):
     """Supported poetry forms."""
 
-    JUEJU_5 = "五言绝句"   # 4 lines, 5 chars
-    JUEJU_7 = "七言绝句"   # 4 lines, 7 chars
-    LUSHI_5 = "五言律诗"   # 8 lines, 5 chars
-    LUSHI_7 = "七言律诗"   # 8 lines, 7 chars
+    JUEJU_5 = "五言绝句"  # 4 lines, 5 chars
+    JUEJU_7 = "七言绝句"  # 4 lines, 7 chars
+    LUSHI_5 = "五言律诗"  # 8 lines, 5 chars
+    LUSHI_7 = "七言律诗"  # 8 lines, 7 chars
     DUILIAN = "对联"
 
 
@@ -44,18 +44,14 @@ class Issue:
     """A single prosody issue."""
 
     level: IssueLevel
-    line: int            # 0-indexed line number, -1 for poem-level
-    column: int          # 0-indexed column, -1 for line-level
-    code: str            # e.g. "pingze_mismatch"
+    line: int  # 0-indexed line number, -1 for poem-level
+    column: int  # 0-indexed column, -1 for line-level
+    code: str  # e.g. "pingze_mismatch"
     message: str
     suggestion: str | None = None
 
     def __str__(self) -> str:
-        loc = (
-            f"L{self.line + 1}"
-            if self.line >= 0
-            else "global"
-        )
+        loc = f"L{self.line + 1}" if self.line >= 0 else "global"
         if self.column >= 0:
             loc = f"L{self.line + 1}C{self.column + 1}"
         prefix = "✗" if self.level == IssueLevel.ERROR else "!"
@@ -107,26 +103,90 @@ class CheckResult:
 
 WUSHENG_JULV: dict[str, list[str]] = {
     # 5-char lüshi patterns (8 lines each)
-    "平起入韵": ["平平仄仄平", "仄仄仄平平", "仄仄平平仄", "平平仄仄平",
-                  "平平仄仄平", "仄仄仄平平", "仄仄平平仄", "平平仄仄平"],
-    "平起不入韵": ["平平平仄仄", "仄仄仄平平", "仄仄平平仄", "平平仄仄平",
-                    "平平平仄仄", "仄仄仄平平", "仄仄平平仄", "平平仄仄平"],
-    "仄起入韵": ["仄仄仄平平", "平平仄仄平", "平平平仄仄", "仄仄仄平平",
-                  "仄仄仄平平", "平平仄仄平", "平平平仄仄", "仄仄仄平平"],
-    "仄起不入韵": ["仄仄平平仄", "平平仄仄平", "平平平仄仄", "仄仄仄平平",
-                    "仄仄平平仄", "平平仄仄平", "平平平仄仄", "仄仄仄平平"],
+    "平起入韵": [
+        "平平仄仄平",
+        "仄仄仄平平",
+        "仄仄平平仄",
+        "平平仄仄平",
+        "平平仄仄平",
+        "仄仄仄平平",
+        "仄仄平平仄",
+        "平平仄仄平",
+    ],
+    "平起不入韵": [
+        "平平平仄仄",
+        "仄仄仄平平",
+        "仄仄平平仄",
+        "平平仄仄平",
+        "平平平仄仄",
+        "仄仄仄平平",
+        "仄仄平平仄",
+        "平平仄仄平",
+    ],
+    "仄起入韵": [
+        "仄仄仄平平",
+        "平平仄仄平",
+        "平平平仄仄",
+        "仄仄仄平平",
+        "仄仄仄平平",
+        "平平仄仄平",
+        "平平平仄仄",
+        "仄仄仄平平",
+    ],
+    "仄起不入韵": [
+        "仄仄平平仄",
+        "平平仄仄平",
+        "平平平仄仄",
+        "仄仄仄平平",
+        "仄仄平平仄",
+        "平平仄仄平",
+        "平平平仄仄",
+        "仄仄仄平平",
+    ],
 }
 
 QISHENG_JULV: dict[str, list[str]] = {
     # 7-char lüshi patterns
-    "平起入韵": ["平平仄仄仄平平", "仄仄平平仄仄平", "仄仄平平平仄仄", "平平仄仄仄平平",
-                  "平平仄仄仄平平", "仄仄平平仄仄平", "仄仄平平平仄仄", "平平仄仄仄平平"],
-    "平起不入韵": ["平平仄仄平平仄", "仄仄平平仄仄平", "仄仄平平平仄仄", "平平仄仄仄平平",
-                     "平平仄仄平平仄", "仄仄平平仄仄平", "仄仄平平平仄仄", "平平仄仄仄平平"],
-    "仄起入韵": ["仄仄平平仄仄平", "平平仄仄仄平平", "平平仄仄平平仄", "仄仄平平仄仄平",
-                  "仄仄平平仄仄平", "平平仄仄仄平平", "平平仄仄平平仄", "仄仄平平仄仄平"],
-    "仄起不入韵": ["仄仄平平平仄仄", "平平仄仄仄平平", "平平仄仄平平仄", "仄仄平平仄仄平",
-                     "仄仄平平平仄仄", "平平仄仄仄平平", "平平仄仄平平仄", "仄仄平平仄仄平"],
+    "平起入韵": [
+        "平平仄仄仄平平",
+        "仄仄平平仄仄平",
+        "仄仄平平平仄仄",
+        "平平仄仄仄平平",
+        "平平仄仄仄平平",
+        "仄仄平平仄仄平",
+        "仄仄平平平仄仄",
+        "平平仄仄仄平平",
+    ],
+    "平起不入韵": [
+        "平平仄仄平平仄",
+        "仄仄平平仄仄平",
+        "仄仄平平平仄仄",
+        "平平仄仄仄平平",
+        "平平仄仄平平仄",
+        "仄仄平平仄仄平",
+        "仄仄平平平仄仄",
+        "平平仄仄仄平平",
+    ],
+    "仄起入韵": [
+        "仄仄平平仄仄平",
+        "平平仄仄仄平平",
+        "平平仄仄平平仄",
+        "仄仄平平仄仄平",
+        "仄仄平平仄仄平",
+        "平平仄仄仄平平",
+        "平平仄仄平平仄",
+        "仄仄平平仄仄平",
+    ],
+    "仄起不入韵": [
+        "仄仄平平平仄仄",
+        "平平仄仄仄平平",
+        "平平仄仄平平仄",
+        "仄仄平平仄仄平",
+        "仄仄平平平仄仄",
+        "平平仄仄仄平平",
+        "平平仄仄平平仄",
+        "仄仄平平仄仄平",
+    ],
 }
 
 WUSHENG_JUEJU: dict[str, list[str]] = {
@@ -174,7 +234,7 @@ def _strip_punct(text: str) -> str:
 def _is_punct(c: str) -> bool:
     code = ord(c)
     return (
-        0x3000 <= code <= 0x303F   # CJK punctuation
+        0x3000 <= code <= 0x303F  # CJK punctuation
         or 0xFF00 <= code <= 0xFFEF
         or 0x0021 <= code <= 0x002F
         or 0x003A <= code <= 0x0040
@@ -282,7 +342,9 @@ def _match_pattern(
     return issues
 
 
-def _best_pattern(lines: Sequence[str], patterns: dict[str, list[str]]) -> tuple[str, list[str], int]:
+def _best_pattern(
+    lines: Sequence[str], patterns: dict[str, list[str]]
+) -> tuple[str, list[str], int]:
     """Find the pattern with fewest errors. Returns (name, pattern, errors)."""
     best: tuple[str, list[str], int] | None = None
     for name, pat in patterns.items():
@@ -476,15 +538,15 @@ def check_duilian(upper: str, lower: str) -> CheckResult:
 
 
 __all__ = [
-    "PoetryForm",
-    "IssueLevel",
-    "Issue",
+    "LINE_LENGTH",
+    "PATTERNS",
+    "RHYME_POSITIONS",
     "CheckResult",
-    "check_poem",
+    "Issue",
+    "IssueLevel",
+    "PoetryForm",
+    "check_duilian",
     "check_jueju",
     "check_lushi",
-    "check_duilian",
-    "PATTERNS",
-    "LINE_LENGTH",
-    "RHYME_POSITIONS",
+    "check_poem",
 ]

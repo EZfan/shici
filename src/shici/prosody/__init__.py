@@ -6,50 +6,50 @@ under MIT License. See data/LICENSE-gelv-poetry.txt for the full text.
 
 from __future__ import annotations
 
-from .classifier import Tone, ToneClassifier, classify_character, classify_line
-from .rhyme import RhymeBook, RhymeGroup, classify_rhyme, lookup_rhyme
 from .checker import (
     CheckResult,
     Issue,
     IssueLevel,
     PoetryForm,
+    check_duilian,
     check_jueju,
     check_lushi,
     check_poem,
-    check_duilian,
 )
+from .classifier import Tone, ToneClassifier, classify_character, classify_line
+from .duilian import (
+    antithesis_score,
+    check_antithesis,
+)
+from .rhyme import RhymeBook, RhymeGroup, classify_rhyme, lookup_rhyme
 from .templates import (
     CIPAI_REGISTRY,
     CipaiTemplate,
     get_cipai,
     list_cipai,
 )
-from .duilian import (
-    check_antithesis,
-    antithesis_score,
-)
 
 __all__ = [
-    "Tone",
-    "ToneClassifier",
-    "classify_character",
-    "classify_line",
-    "RhymeBook",
-    "RhymeGroup",
-    "classify_rhyme",
-    "lookup_rhyme",
+    "CIPAI_REGISTRY",
     "CheckResult",
+    "CipaiTemplate",
     "Issue",
     "IssueLevel",
     "PoetryForm",
+    "RhymeBook",
+    "RhymeGroup",
+    "Tone",
+    "ToneClassifier",
+    "antithesis_score",
+    "check_antithesis",
+    "check_duilian",
     "check_jueju",
     "check_lushi",
     "check_poem",
-    "check_duilian",
-    "CIPAI_REGISTRY",
-    "CipaiTemplate",
+    "classify_character",
+    "classify_line",
+    "classify_rhyme",
     "get_cipai",
     "list_cipai",
-    "check_antithesis",
-    "antithesis_score",
+    "lookup_rhyme",
 ]

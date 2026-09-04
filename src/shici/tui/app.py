@@ -14,11 +14,11 @@ from __future__ import annotations
 
 from textual.app import App, ComposeResult
 from textual.binding import Binding
-from textual.containers import Container, Vertical
-from textual.widgets import Footer, Header, Static
+from textual.containers import Container
+from textual.widgets import Footer, Header
 
-from .screens import BrowseScreen, CheckScreen, GenerateScreen, HomeScreen
 from .. import __version__
+from .screens import BrowseScreen, CheckScreen, GenerateScreen, HomeScreen
 
 __all__ = ["ShiciApp", "run"]
 

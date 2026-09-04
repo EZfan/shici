@@ -18,7 +18,7 @@ from __future__ import annotations
 
 from textual.app import ComposeResult
 from textual.binding import Binding
-from textual.containers import Container, Horizontal, Vertical
+from textual.containers import Horizontal, Vertical
 from textual.screen import Screen
 from textual.widgets import ListItem, ListView, Static
 
@@ -52,7 +52,7 @@ class BrowseScreen(Screen):
     def on_mount(self) -> None:
         """Populate the cipai list."""
         try:
-            from ...prosody import list_cipai, get_cipai  # type: ignore
+            from ...prosody import get_cipai, list_cipai  # type: ignore
         except Exception as exc:
             self._render_unavailable(exc)
             return
@@ -80,7 +80,7 @@ class BrowseScreen(Screen):
         item_id = event.item.id or ""
         if not item_id.startswith("cipai-"):
             return
-        name = item_id[len("cipai-"):]
+        name = item_id[len("cipai-") :]
         try:
             from ...prosody import get_cipai  # type: ignore
         except Exception as exc:
@@ -105,8 +105,9 @@ class BrowseScreen(Screen):
         lines.append(f"[b]{tpl.name}[/b]  ·  [dim]{tpl.category}[/dim]")
         lines.append("")
         lines.append(f"[b]句数:[/b] {tpl.line_count}")
-        lines.append(f"[b]字数:[/b] {tpl.total_chars}  "
-                     f"([i]{', '.join(str(n) for n in tpl.char_counts)}[/i])")
+        lines.append(
+            f"[b]字数:[/b] {tpl.total_chars}  ([i]{', '.join(str(n) for n in tpl.char_counts)}[/i])"
+        )
         lines.append(f"[b]韵位:[/b] {', '.join(str(p) for p in tpl.rhyme_positions) or '—'}")
         if tpl.rhyme_groups_allowed:
             rg = ", ".join(g.value for g in tpl.rhyme_groups_allowed)
@@ -114,14 +115,15 @@ class BrowseScreen(Screen):
         lines.append("")
         lines.append("[b]平仄模式[/b]")
         for i, (pat, count) in enumerate(zip(tpl.tone_patterns, tpl.char_counts)):
-            lines.append(f"  L{i + 1:>2} ({count} 字): [tone-ping]平[/tone-ping]/"
-                         f"[tone-ze]仄[/tone-ze] = {pat}")
+            lines.append(
+                f"  L{i + 1:>2} ({count} 字): [tone-ping]平[/tone-ping]/"
+                f"[tone-ze]仄[/tone-ze] = {pat}"
+            )
 
         if tpl.example_title or tpl.example_author:
             lines.append("")
             lines.append(
-                f"[b]代表作品:[/b] 《{tpl.example_title or '—'}》 "
-                f"{tpl.example_author or ''}"
+                f"[b]代表作品:[/b] 《{tpl.example_title or '—'}》 {tpl.example_author or ''}"
             )
             for i, ln in enumerate(tpl.example_lines):
                 lines.append(f"  [b]L{i + 1:>2}[/b]  [poem-line]{ln}[/poem-line]")
@@ -146,9 +148,7 @@ class BrowseScreen(Screen):
     def _render_unavailable(self, exc: BaseException) -> None:
         """Render a fallback notice when the prosody engine is missing."""
         msg = (
-            "[!] 词牌注册表不可用[/i]\n"
-            f"  [b]{exc}[/b]\n\n"
-            "请安装项目依赖:  [b]pip install -e .[/b]"
+            f"[!] 词牌注册表不可用[/i]\n  [b]{exc}[/b]\n\n请安装项目依赖:  [b]pip install -e .[/b]"
         )
         self._set_detail(msg)
         try:

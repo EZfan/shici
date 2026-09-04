@@ -59,16 +59,13 @@ def _normalize_yunbu_xinyun(yunbu: str, tone: str) -> str:
 @lru_cache(maxsize=1)
 def load_pingshui() -> dict[str, dict]:
     """Load pingshui.json and adapt to shici's per-character dict schema."""
-    raw = resources.files("shici.prosody.data").joinpath("pingshui.json").read_text(
-        encoding="utf-8"
+    raw = (
+        resources.files("shici.prosody.data").joinpath("pingshui.json").read_text(encoding="utf-8")
     )
     data = loads(raw)
     out: dict[str, dict] = {}
     for char, entries in data.items():
-        readings = [
-            (_normalize_yunbu_pingshui(yunbu, diao), diao)
-            for yunbu, diao in entries
-        ]
+        readings = [(_normalize_yunbu_pingshui(yunbu, diao), diao) for yunbu, diao in entries]
         ping = any(diao in _PING_TONES_PINGSHUI for _, diao in readings)
         # Prefer a 平声 韵部 for rhyme grouping; fall back to first reading.
         ping_group = next(
@@ -86,16 +83,11 @@ def load_pingshui() -> dict[str, dict]:
 @lru_cache(maxsize=1)
 def load_xinyun() -> dict[str, dict]:
     """Load xinyun.json and adapt to shici's per-character dict schema."""
-    raw = resources.files("shici.prosody.data").joinpath("xinyun.json").read_text(
-        encoding="utf-8"
-    )
+    raw = resources.files("shici.prosody.data").joinpath("xinyun.json").read_text(encoding="utf-8")
     data = loads(raw)
     out: dict[str, dict] = {}
     for char, entries in data.items():
-        readings = [
-            (_normalize_yunbu_xinyun(yunbu, tone), tone)
-            for yunbu, tone in entries
-        ]
+        readings = [(_normalize_yunbu_xinyun(yunbu, tone), tone) for yunbu, tone in entries]
         ping = any(tone in _PING_TONES_XINYUN for _, tone in readings)
         ping_group = next(
             (y for y, t in readings if t in _PING_TONES_XINYUN),

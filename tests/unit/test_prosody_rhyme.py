@@ -9,15 +9,12 @@ Tests cover:
 
 from __future__ import annotations
 
-import pytest
-
 from shici.prosody.rhyme import (
     RhymeBook,
     RhymeGroup,
     classify_rhyme,
     lookup_rhyme,
 )
-
 
 # ---------------------------------------------------------------------------
 # RhymeGroup enum

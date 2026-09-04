@@ -23,11 +23,11 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
-from typing import Any, Type, TypeVar
+from typing import Any, TypeVar
 
 import instructor
 from jinja2 import Environment, FileSystemLoader, select_autoescape
-from litellm import completion  # noqa: F401  -- re-exported
+from litellm import completion
 from pydantic import BaseModel
 
 from .schemas import (
@@ -37,7 +37,6 @@ from .schemas import (
     PoemForm,
     RhymeGroup,
 )
-
 
 T = TypeVar("T", bound=BaseModel)
 
@@ -133,9 +132,7 @@ class LLMConfig:
         self.model: str = model or defaults["model"]  # type: ignore[assignment]
         self.api_key: str | None = api_key or self._lookup_key(defaults["env_key"])  # type: ignore[arg-type]
         self.base_url: str | None = (
-            base_url
-            if base_url is not None
-            else defaults["base_url"]  # type: ignore[assignment]
+            base_url if base_url is not None else defaults["base_url"]  # type: ignore[assignment]
         )
         self.temperature: float = temperature
         self.max_tokens: int = max_tokens
@@ -217,7 +214,7 @@ def _messages(system_prompt: str, user_prompt: str) -> list[dict[str, str]]:
 
 
 def generate_structured(
-    response_model: Type[T],
+    response_model: type[T],
     system_prompt: str,
     user_prompt: str,
     config: LLMConfig | None = None,

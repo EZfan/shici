@@ -13,9 +13,9 @@ Modules:
 
 from __future__ import annotations
 
-from .home import HomeScreen
-from .generate import GenerateScreen
-from .check import CheckScreen
 from .browse import BrowseScreen
+from .check import CheckScreen
+from .generate import GenerateScreen
+from .home import HomeScreen
 
-__all__ = ["HomeScreen", "GenerateScreen", "CheckScreen", "BrowseScreen"]
+__all__ = ["BrowseScreen", "CheckScreen", "GenerateScreen", "HomeScreen"]

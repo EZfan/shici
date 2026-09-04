@@ -11,9 +11,9 @@ cipai so the package works out-of-the-box without data files.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from collections.abc import Sequence
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Sequence
 
 from .rhyme import RhymeGroup
 
@@ -74,32 +74,39 @@ def _register(template: CipaiTemplate) -> CipaiTemplate:
     return template
 
 
-def _T(name: str, category: str, char_counts: Sequence[int],
-       tone_patterns: Sequence[str], rhyme_positions: Sequence[int],
-       rhyme_groups: Sequence[RhymeGroup] = (),
-       duilian: Sequence[tuple[int, int]] = (),
-       example_author: str = "",
-       example_title: str = "",
-       example_lines: Sequence[str] = (),
-       ) -> CipaiTemplate:
-    return _register(CipaiTemplate(
-        name=name,
-        category=category,
-        line_count=len(char_counts),
-        char_counts=tuple(char_counts),
-        tone_patterns=tuple(tone_patterns),
-        rhyme_positions=tuple(rhyme_positions),
-        rhyme_groups_allowed=tuple(rhyme_groups),
-        duilian_pairs=tuple(duilian),
-        example_author=example_author,
-        example_title=example_title,
-        example_lines=tuple(example_lines),
-    ))
+def _T(
+    name: str,
+    category: str,
+    char_counts: Sequence[int],
+    tone_patterns: Sequence[str],
+    rhyme_positions: Sequence[int],
+    rhyme_groups: Sequence[RhymeGroup] = (),
+    duilian: Sequence[tuple[int, int]] = (),
+    example_author: str = "",
+    example_title: str = "",
+    example_lines: Sequence[str] = (),
+) -> CipaiTemplate:
+    return _register(
+        CipaiTemplate(
+            name=name,
+            category=category,
+            line_count=len(char_counts),
+            char_counts=tuple(char_counts),
+            tone_patterns=tuple(tone_patterns),
+            rhyme_positions=tuple(rhyme_positions),
+            rhyme_groups_allowed=tuple(rhyme_groups),
+            duilian_pairs=tuple(duilian),
+            example_author=example_author,
+            example_title=example_title,
+            example_lines=tuple(example_lines),
+        )
+    )
 
 
 # 浣溪沙 (双调, 42 字, 上阕三句, 下阕三句, 上下阕各押三韵)
 _T(
-    "浣溪沙", "小令",
+    "浣溪沙",
+    "小令",
     char_counts=[7, 7, 7, 7, 7, 7],
     tone_patterns=[
         "中仄中平中仄平",
@@ -124,7 +131,8 @@ _T(
 
 # 如梦令 (单调, 33 字, 七句, 押五仄韵, 一二两韵, 叠句)
 _T(
-    "如梦令", "小令",
+    "如梦令",
+    "小令",
     char_counts=[7, 5, 7, 5, 7, 5, 5],
     tone_patterns=[
         "中仄中平中仄仄",
@@ -151,7 +159,8 @@ _T(
 
 # 水调歌头 (双调, 95 字)
 _T(
-    "水调歌头", "长调",
+    "水调歌头",
+    "长调",
     char_counts=[6, 6, 5, 6, 5, 6, 6, 5, 6, 6, 5, 5, 6, 6, 5, 5, 6, 6, 6],
     tone_patterns=[
         "中平中仄仄平平",
@@ -202,7 +211,8 @@ _T(
 
 # 鹧鸪天 (双调, 55 字)
 _T(
-    "鹧鸪天", "小令",
+    "鹧鸪天",
+    "小令",
     char_counts=[7, 7, 7, 7, 7, 3, 3, 7, 7],
     tone_patterns=[
         "中平中仄仄平平",
@@ -232,7 +242,8 @@ _T(
 
 # 清平乐 (双调, 46 字, 上阕四仄韵, 下阕三平韵)
 _T(
-    "清平乐", "小令",
+    "清平乐",
+    "小令",
     char_counts=[4, 5, 7, 6, 6, 6, 6, 6],
     tone_patterns=[
         "中平中仄",
@@ -261,7 +272,8 @@ _T(
 
 # 点绛唇 (双调, 41 字)
 _T(
-    "点绛唇", "小令",
+    "点绛唇",
+    "小令",
     char_counts=[7, 4, 7, 4, 5, 5, 7, 4],
     tone_patterns=[
         "中仄中平中仄",
@@ -291,7 +303,8 @@ _T(
 
 # 满江红 (双调, 93 字)
 _T(
-    "满江红", "长调",
+    "满江红",
+    "长调",
     char_counts=[4, 7, 4, 4, 7, 4, 4, 7, 4, 3, 7, 4, 3, 7, 4, 4, 7, 4, 3, 7, 4, 4],
     tone_patterns=[
         "中仄平平",
@@ -344,7 +357,8 @@ _T(
 
 # 忆江南 (单调, 27 字)
 _T(
-    "忆江南", "小令",
+    "忆江南",
+    "小令",
     char_counts=[7, 7, 7, 5, 5],
     tone_patterns=[
         "中平中仄仄平平",
@@ -367,7 +381,8 @@ _T(
 
 # 西江月 (双调, 50 字)
 _T(
-    "西江月", "小令",
+    "西江月",
+    "小令",
     char_counts=[7, 7, 7, 7, 7, 7, 7, 7],
     tone_patterns=[
         "中平中仄平平仄",
@@ -396,7 +411,8 @@ _T(
 
 # 蝶恋花 (双调, 60 字)
 _T(
-    "蝶恋花", "小令",
+    "蝶恋花",
+    "小令",
     char_counts=[7, 4, 7, 4, 7, 7, 7, 4, 7, 4],
     tone_patterns=[
         "中仄中平平仄仄",
@@ -429,7 +445,8 @@ _T(
 
 # 临江仙 (双调, 60 字)
 _T(
-    "临江仙", "中调",
+    "临江仙",
+    "中调",
     char_counts=[7, 7, 7, 7, 7, 7, 7, 7, 5, 6],
     tone_patterns=[
         "中平中仄平平仄",
@@ -462,7 +479,8 @@ _T(
 
 # 念奴娇 (双调, 100 字)
 _T(
-    "念奴娇", "长调",
+    "念奴娇",
+    "长调",
     char_counts=[4, 6, 5, 5, 6, 6, 6, 5, 6, 6, 5, 5, 4, 6, 5, 5, 6, 6, 6, 5],
     tone_patterns=[
         "中平中仄",
@@ -515,7 +533,8 @@ _T(
 
 # 声声慢 (双调, 97 字)
 _T(
-    "声声慢", "长调",
+    "声声慢",
+    "长调",
     char_counts=[7, 5, 7, 5, 7, 5, 5, 7, 5, 7, 5, 5, 7, 5, 7],
     tone_patterns=[
         "中平中仄平平仄",
@@ -561,7 +580,8 @@ _T(
 
 # 一剪梅 (双调, 60 字)
 _T(
-    "一剪梅", "小令",
+    "一剪梅",
+    "小令",
     char_counts=[7, 7, 7, 7, 7, 7, 7, 7, 7, 7],
     tone_patterns=[
         "中平中仄仄平平",
@@ -592,7 +612,8 @@ _T(
 
 # 卜算子 (双调, 44 字)
 _T(
-    "卜算子", "小令",
+    "卜算子",
+    "小令",
     char_counts=[7, 7, 7, 7, 5, 7, 7, 5],
     tone_patterns=[
         "中仄平平中仄仄",
@@ -621,7 +642,8 @@ _T(
 
 # 菩萨蛮 (双调, 44 字, 平仄转换)
 _T(
-    "菩萨蛮", "小令",
+    "菩萨蛮",
+    "小令",
     char_counts=[7, 7, 5, 5, 7, 7, 5, 5],
     tone_patterns=[
         "中平中仄平平仄",
@@ -650,7 +672,8 @@ _T(
 
 # 沁园春 (双调, 114 字)
 _T(
-    "沁园春", "长调",
+    "沁园春",
+    "长调",
     char_counts=[4, 6, 4, 7, 5, 6, 5, 6, 5, 7, 4, 4, 4],
     tone_patterns=[
         "中仄平平",
@@ -699,7 +722,8 @@ _T(
 
 # 渔家傲 (双调, 62 字)
 _T(
-    "渔家傲", "中调",
+    "渔家傲",
+    "中调",
     char_counts=[7, 7, 7, 7, 7, 7, 7, 7, 7, 7],
     tone_patterns=[
         "中仄中平平仄仄",
@@ -730,7 +754,8 @@ _T(
 
 # 青玉案 (双调, 67 字)
 _T(
-    "青玉案", "中调",
+    "青玉案",
+    "中调",
     char_counts=[7, 6, 7, 6, 4, 4, 6, 6, 5, 5, 4],
     tone_patterns=[
         "中平中仄平平仄",
@@ -766,7 +791,8 @@ _T(
 
 # 钗头凤 (双调, 60 字, 上下阕各押四仄韵, 叠韵)
 _T(
-    "钗头凤", "中调",
+    "钗头凤",
+    "中调",
     char_counts=[7, 7, 7, 7, 4, 4, 6, 6, 4, 4, 7, 7, 7, 7],
     tone_patterns=[
         "中仄平平中仄仄",
@@ -825,6 +851,7 @@ def load_cipai_from_directory(directory: Path | str) -> int:
     Returns the number of templates loaded.
     """
     from json import loads
+
     p = Path(directory)
     if not p.exists():
         return 0
@@ -851,9 +878,9 @@ def load_cipai_from_directory(directory: Path | str) -> int:
 
 
 __all__ = [
-    "CipaiTemplate",
     "CIPAI_REGISTRY",
-    "list_cipai",
+    "CipaiTemplate",
     "get_cipai",
+    "list_cipai",
     "load_cipai_from_directory",
 ]

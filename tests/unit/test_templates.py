@@ -19,7 +19,6 @@ from shici.prosody.templates import (
     list_cipai,
 )
 
-
 # ---------------------------------------------------------------------------
 # Registry basics
 # ---------------------------------------------------------------------------
@@ -88,8 +87,7 @@ class TestCipaiStructure:
         """Each cipai's tone_patterns length matches line_count."""
         tpl = CIPAI_REGISTRY[name]
         assert len(tpl.tone_patterns) == tpl.line_count, (
-            f"{name}: tone_patterns={len(tpl.tone_patterns)} "
-            f"vs lines={tpl.line_count}"
+            f"{name}: tone_patterns={len(tpl.tone_patterns)} vs lines={tpl.line_count}"
         )
 
     @pytest.mark.parametrize("name", list(CIPAI_REGISTRY.keys()))
@@ -107,9 +105,7 @@ class TestCipaiStructure:
         characters does not exceed the line's char count.
         """
         tpl = CIPAI_REGISTRY[name]
-        for i, (pattern, count) in enumerate(
-            zip(tpl.tone_patterns, tpl.char_counts)
-        ):
+        for i, (pattern, count) in enumerate(zip(tpl.tone_patterns, tpl.char_counts)):
             non_flexible = sum(1 for c in pattern if c in "平仄")
             assert non_flexible <= count, (
                 f"{name} line {i}: pattern {pattern!r} has "
@@ -122,17 +118,13 @@ class TestCipaiStructure:
         tpl = CIPAI_REGISTRY[name]
         for i, pattern in enumerate(tpl.tone_patterns):
             for ch in pattern:
-                assert ch in "平仄中", (
-                    f"{name} line {i}: invalid pattern char {ch!r}"
-                )
+                assert ch in "平仄中", f"{name} line {i}: invalid pattern char {ch!r}"
 
     @pytest.mark.parametrize("name", list(CIPAI_REGISTRY.keys()))
     def test_non_flexible_pattern_chars_leq_count(self, name: str):
         """Each pattern's non-flexible markers should not exceed the line length."""
         tpl = CIPAI_REGISTRY[name]
-        for i, (pattern, count) in enumerate(
-            zip(tpl.tone_patterns, tpl.char_counts)
-        ):
+        for i, (pattern, count) in enumerate(zip(tpl.tone_patterns, tpl.char_counts)):
             non_flexible = sum(1 for c in pattern if c in "平仄")
             assert non_flexible <= count, (
                 f"{name} line {i}: pattern {pattern} has "
@@ -145,8 +137,7 @@ class TestCipaiStructure:
         tpl = CIPAI_REGISTRY[name]
         for rp in tpl.rhyme_positions:
             assert 0 <= rp < tpl.line_count, (
-                f"{name}: rhyme_position {rp} out of range for "
-                f"line_count={tpl.line_count}"
+                f"{name}: rhyme_position {rp} out of range for line_count={tpl.line_count}"
             )
 
     @pytest.mark.parametrize("name", list(CIPAI_REGISTRY.keys()))

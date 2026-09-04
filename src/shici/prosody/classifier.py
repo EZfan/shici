@@ -51,7 +51,7 @@ class ToneDictionary:
         self._entries = entries
 
     @classmethod
-    def load(cls) -> "ToneDictionary":
+    def load(cls) -> ToneDictionary:
         """Load the bundled dictionary."""
         data = load_pingshui()
         entries: dict[str, ToneEntry] = {}
@@ -157,9 +157,9 @@ def _is_chinese(char: str) -> bool:
 
 __all__ = [
     "Tone",
-    "ToneEntry",
-    "ToneDictionary",
     "ToneClassifier",
+    "ToneDictionary",
+    "ToneEntry",
     "classify_character",
     "classify_line",
     "classify_text",

@@ -11,38 +11,30 @@ Usage examples:
 
 from __future__ import annotations
 
-import sys
 from pathlib import Path
-from typing import Optional
 
 import typer
-from rich.console import Console
-from rich.table import Table
-from rich.panel import Panel
-from rich.text import Text
 from rich import box
+from rich.panel import Panel
+from rich.table import Table
+from rich.text import Text
 
 from . import __version__
 from .prosody import (
-    check_poem,
-    check_jueju,
-    check_lushi,
-    check_duilian,
     PoetryForm,
-    list_cipai,
-    get_cipai,
-    classify_character,
     Tone,
-    lookup_rhyme,
-    RhymeGroup,
     antithesis_score,
+    check_duilian,
+    check_poem,
+    classify_character,
+    get_cipai,
+    list_cipai,
+    lookup_rhyme,
 )
 from .utils import (
-    read_poem_file,
+    console,
     render_issues,
     render_poem_panel,
-    render_welcome,
-    console,
 )
 
 app = typer.Typer(
@@ -70,7 +62,11 @@ def _version_callback(value: bool) -> None:
 @app.callback()
 def main(
     version: bool = typer.Option(
-        False, "--version", "-V", callback=_version_callback, is_eager=True,
+        False,
+        "--version",
+        "-V",
+        callback=_version_callback,
+        is_eager=True,
         help="Show version and exit.",
     ),
 ) -> None:
@@ -80,15 +76,23 @@ def main(
 @app.command()
 def check(
     file: Path = typer.Argument(..., exists=True, readable=True, help="诗作文件,每行一句"),
-    form: Optional[str] = typer.Option(
-        None, "--form", "-f",
+    form: str | None = typer.Option(
+        None,
+        "--form",
+        "-f",
         help="显式指定体裁: 五言绝句 / 七言绝句 / 五言律诗 / 七言律诗 / 对联",
     ),
     duilian: bool = typer.Option(
-        False, "--duilian", "-d", help="按对联检查(两行)",
+        False,
+        "--duilian",
+        "-d",
+        help="按对联检查(两行)",
     ),
     json_output: bool = typer.Option(
-        False, "--json", "-j", help="以 JSON 格式输出",
+        False,
+        "--json",
+        "-j",
+        help="以 JSON 格式输出",
     ),
 ) -> None:
     """检查诗作是否合乎格律。"""
@@ -102,9 +106,7 @@ def check(
     else:
         lines = [line.strip() for line in text.splitlines() if line.strip()]
         if len(lines) not in (4, 8):
-            console.print(
-                f"[red]诗作应为 4 句 (绝句) 或 8 句 (律诗),当前 {len(lines)} 句[/red]"
-            )
+            console.print(f"[red]诗作应为 4 句 (绝句) 或 8 句 (律诗),当前 {len(lines)} 句[/red]")
             raise typer.Exit(code=1)
         explicit_form = None
         if form:
@@ -116,7 +118,6 @@ def check(
         result = check_poem(lines, form=explicit_form)
 
     if json_output:
-        import json
         payload = {
             "form": result.form.value,
             "ok": result.ok,
@@ -162,9 +163,7 @@ def search(
         searcher = CorpusSearcher()
     except Exception as e:
         console.print(f"[red]语料库未初始化: {e}[/red]")
-        console.print(
-            "[dim]提示: 运行 [cyan]shici index[/cyan] 先建立索引。[/dim]"
-        )
+        console.print("[dim]提示: 运行 [cyan]shici index[/cyan] 先建立索引。[/dim]")
         raise typer.Exit(code=1) from None
 
     results = searcher.search(line, top_k=top_k)
@@ -173,11 +172,10 @@ def search(
         return
 
     if json_output:
-        import json
         console.print_json(data=results)
     else:
         table = Table(
-            title=f"与 \"{line}\" 相似的诗句",
+            title=f'与 "{line}" 相似的诗句',
             box=box.ROUNDED,
             title_style="bold cyan",
         )
@@ -204,7 +202,9 @@ def critique(
     try:
         from .llm import critique_poem
     except ImportError:
-        console.print("[yellow]鉴赏功能需要 llm 扩展:[/yellow] [cyan]uv add shici --extra llm[/cyan]")
+        console.print(
+            "[yellow]鉴赏功能需要 llm 扩展:[/yellow] [cyan]uv add shici --extra llm[/cyan]"
+        )
         raise typer.Exit(code=1) from None
 
     text = file.read_text(encoding="utf-8").strip()
@@ -265,11 +265,13 @@ def annotate(
     with console.status("[cyan]生成注释...[/cyan]"):
         annotations = annotate_poem(lines)
     for i, (line, ann) in enumerate(zip(lines, annotations), 1):
-        console.print(Panel(
-            ann.get("text", ""),
-            title=f"[bold cyan]第 {i} 句: {line}[/bold cyan]",
-            border_style="cyan",
-        ))
+        console.print(
+            Panel(
+                ann.get("text", ""),
+                title=f"[bold cyan]第 {i} 句: {line}[/bold cyan]",
+                border_style="cyan",
+            )
+        )
 
 
 @app.command()
@@ -286,11 +288,13 @@ def lint(
         marker = "平" if tone == Tone.PING else ("仄" if tone == Tone.ZE else "中")
         tones.append((c, marker))
 
-    console.print(Panel(
-        _format_tone_table(tones),
-        title=f"[bold cyan]平仄分析: {line}[/bold cyan]",
-        border_style="cyan",
-    ))
+    console.print(
+        Panel(
+            _format_tone_table(tones),
+            title=f"[bold cyan]平仄分析: {line}[/bold cyan]",
+            border_style="cyan",
+        )
+    )
 
 
 @app.command()
@@ -306,9 +310,7 @@ def rhyme(
         console.print(f"[yellow]未找到 '{char}' 的韵部[/yellow]")
         raise typer.Exit(code=1)
     tone = classify_character(char)
-    console.print(
-        f"[cyan]{char}[/cyan] → [bold]韵部: {rg.value}[/bold] · 平/仄: {tone.value}"
-    )
+    console.print(f"[cyan]{char}[/cyan] → [bold]韵部: {rg.value}[/bold] · 平/仄: {tone.value}")
 
 
 @app.command()
@@ -335,7 +337,7 @@ def cipai() -> None:
 @app.command(name="duilian")
 def duilian(
     upper: str = typer.Argument(..., help="上联"),
-    lower: Optional[str] = typer.Argument(None, help="下联 (留空则只评估上联)"),
+    lower: str | None = typer.Argument(None, help="下联 (留空则只评估上联)"),
 ) -> None:
     """对仗检查。"""
     if lower is None:
@@ -345,12 +347,14 @@ def duilian(
 
     score = antithesis_score(upper, lower)
     result = check_duilian(upper, lower)
-    console.print(Panel(
-        f"[bold]对仗得分: {score:.2f} / 1.00[/bold]\n"
-        f"格律问题: {result.error_count} 处错误, {result.warning_count} 处警告",
-        title=f"[bold cyan]对仗分析[/bold cyan]",
-        border_style="cyan",
-    ))
+    console.print(
+        Panel(
+            f"[bold]对仗得分: {score:.2f} / 1.00[/bold]\n"
+            f"格律问题: {result.error_count} 处错误, {result.warning_count} 处警告",
+            title="[bold cyan]对仗分析[/bold cyan]",
+            border_style="cyan",
+        )
+    )
     render_issues(result)
 
 
@@ -368,6 +372,7 @@ def index(
 ) -> None:
     """建立 RAG 向量索引 (从 data/poetry/*.jsonl)。"""
     from .rag.indexer import index_command
+
     index_command(source=source, output=output, model=model)
 
 
@@ -378,6 +383,7 @@ def fetch(
 ) -> None:
     """下载 chinese-poetry 语料库 (按 chinese-poetry 仓库 README 操作)。"""
     from .rag.indexer import fetch_command
+
     fetch_command(output=output, source=source)
 
 
@@ -388,10 +394,7 @@ def tui() -> None:
         from .app import run
     except ImportError as e:
         console.print(f"[red]TUI 不可用: {e}[/red]")
-        console.print(
-            "[dim]提示:[/dim] 安装 textual 扩展: "
-            "[cyan]uv add shici --extra tui[/cyan]"
-        )
+        console.print("[dim]提示:[/dim] 安装 textual 扩展: [cyan]uv add shici --extra tui[/cyan]")
         raise typer.Exit(code=1) from None
     run()
 
@@ -400,13 +403,14 @@ def tui() -> None:
 def generate_jueju(
     theme: str = typer.Option(..., "--theme", "-t", help="主题,如 思乡/送别/山水"),
     chars: int = typer.Option(7, "--chars", "-c", help="每句字数 (5 或 7)"),
-    rhyme: Optional[str] = typer.Option(None, "--rhyme", "-r", help="韵部,如 上平一东"),
+    rhyme: str | None = typer.Option(None, "--rhyme", "-r", help="韵部,如 上平一东"),
     model: str = typer.Option("deepseek", "--model", "-m"),
     revise: int = typer.Option(2, "--revisions", help="修订轮数"),
 ) -> None:
     """生成绝句 (4 句)。"""
     try:
-        from .llm import generate_jueju as _gen, get_client, LLMConfig
+        from .llm import LLMConfig, get_client
+        from .llm import generate_jueju as _gen
     except ImportError:
         console.print("[yellow]请先安装 llm 扩展: uv add shici --extra llm[/yellow]")
         raise typer.Exit(code=1) from None
@@ -424,6 +428,7 @@ def generate_jueju(
         if result.ok:
             break
         from .llm import generate_revision
+
         with console.status(f"[cyan]第 {round_num + 1} 轮修订...[/cyan]"):
             revised = generate_revision(poem, result.issues, config=config)
             poem = revised
@@ -431,12 +436,14 @@ def generate_jueju(
 
     # Final check + render
     final_result = check_poem(lines, form=form)
-    console.print(Panel(
-        "\n".join(lines),
-        title=f"[bold cyan]{poem.title or form.value}[/bold cyan]",
-        subtitle=f"[dim]主题: {poem.theme}[/dim]",
-        border_style="cyan",
-    ))
+    console.print(
+        Panel(
+            "\n".join(lines),
+            title=f"[bold cyan]{poem.title or form.value}[/bold cyan]",
+            subtitle=f"[dim]主题: {poem.theme}[/dim]",
+            border_style="cyan",
+        )
+    )
     render_issues(final_result)
     if poem.notes:
         console.print(f"\n[dim]创作意图: {poem.notes}[/dim]")
@@ -450,7 +457,8 @@ def generate_ci(
 ) -> None:
     """生成词。"""
     try:
-        from .llm import generate_ci as _gen_ci, LLMConfig
+        from .llm import LLMConfig
+        from .llm import generate_ci as _gen_ci
     except ImportError:
         console.print("[yellow]请先安装 llm 扩展[/yellow]")
         raise typer.Exit(code=1) from None
@@ -459,12 +467,14 @@ def generate_ci(
     with console.status(f"[cyan]生成 {cipai_name}...[/cyan]"):
         ci = _gen_ci(cipai_name=cipai_name, theme=theme, config=config)
     lines = [line.text for line in ci.lines]
-    console.print(Panel(
-        "\n".join(lines),
-        title=f"[bold cyan]{ci.title or cipai_name}[/bold cyan]",
-        subtitle=f"[dim]{ci.cipai} · 主题: {ci.theme}[/dim]",
-        border_style="cyan",
-    ))
+    console.print(
+        Panel(
+            "\n".join(lines),
+            title=f"[bold cyan]{ci.title or cipai_name}[/bold cyan]",
+            subtitle=f"[dim]{ci.cipai} · 主题: {ci.theme}[/dim]",
+            border_style="cyan",
+        )
+    )
 
 
 def _is_chinese(c: str) -> bool:

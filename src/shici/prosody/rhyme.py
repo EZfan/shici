@@ -134,7 +134,7 @@ class RhymeGroup(str, Enum):
     RU_SHENG_17_YUE = "入声十七洽"
 
     @classmethod
-    def from_string(cls, value: str) -> "RhymeGroup | None":
+    def from_string(cls, value: str) -> RhymeGroup | None:
         """Best-effort lookup from any string. Returns None if no match."""
         for member in cls:
             if member.value == value:
@@ -207,16 +207,12 @@ def _is_chinese(char: str) -> bool:
     if not char:
         return False
     code = ord(char)
-    return (
-        0x4E00 <= code <= 0x9FFF
-        or 0x3400 <= code <= 0x4DBF
-        or 0x20000 <= code <= 0x2A6DF
-    )
+    return 0x4E00 <= code <= 0x9FFF or 0x3400 <= code <= 0x4DBF or 0x20000 <= code <= 0x2A6DF
 
 
 __all__ = [
-    "RhymeGroup",
     "RhymeBook",
-    "lookup_rhyme",
+    "RhymeGroup",
     "classify_rhyme",
+    "lookup_rhyme",
 ]
