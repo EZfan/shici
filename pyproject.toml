@@ -55,7 +55,7 @@ rag = [
     "sentence-transformers>=3",
 ]
 dev = [
-    "pytest>=8",
+    "pytest>=9.1.1",
     "pytest-asyncio>=0.23",
     "pytest-cov>=5",
     "vcrpy>=6",
