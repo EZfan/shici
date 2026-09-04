@@ -37,7 +37,7 @@ classifiers = [
 dependencies = [
     "typer>=0.12",
     "rich>=13.7",
-    "pypinyin>=0.51",
+    "pypinyin>=0.55.0",
     "jieba>=0.42",
 ]
 
