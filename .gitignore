@@ -79,3 +79,5 @@ tests/eval/results/
 
 # uv
 uv.lock.bak
+# mkdocs build output
+site/
