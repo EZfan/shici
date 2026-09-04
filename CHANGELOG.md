@@ -32,4 +32,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - CI across Ubuntu/macOS/Windows × Python 3.11/3.12/3.13
 - PyPI Trusted Publishing via GitHub Actions
 
-[Unreleased]: https://github.com/anthropics/shici/compare/main...HEAD
+[Unreleased]: https://github.com/EZfan/shici/compare/main...HEAD

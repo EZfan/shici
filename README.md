@@ -11,15 +11,16 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/anthropics/shici/blob/main/LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-c73e1d.svg?style=for-the-badge"></a>
+  <a href="https://github.com/EZfan/shici/blob/main/LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-c73e1d.svg?style=for-the-badge"></a>
   <a href="https://pypi.org/project/shici/"><img alt="PyPI" src="https://img.shields.io/pypi/v/shici?style=for-the-badge"></a>
   <a href="https://python.org"><img alt="Python 3.11+" src="https://img.shields.io/badge/python-3.11+-blue.svg?style=for-the-badge"></a>
-  <a href="https://github.com/anthropics/shici/actions"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/anthropics/shici/ci.yml?style=for-the-badge"></a>
+  <a href="https://github.com/EZfan/shici/releases"><img alt="Release" src="https://img.shields.io/github/v/release/EZfan/shici?style=for-the-badge&color=c73e1d"></a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/anthropics/shici/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/anthropics/shici?style=social"></a>
-  <a href="https://github.com/anthropics/shici/network"><img alt="GitHub forks" src="https://img.shields.io/github/forks/anthropics/shici?style=social"></a>
+  <a href="https://github.com/EZfan/shici/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/EZfan/shici?style=social"></a>
+  <a href="https://github.com/EZfan/shici/network"><img alt="GitHub forks" src="https://img.shields.io/github/forks/EZfan/shici?style=social"></a>
+  <a href="https://github.com/EZfan/shici/watchers"><img alt="Watchers" src="https://img.shields.io/github/watchers/EZfan/shici?style=social"></a>
 </p>
 
 ---
@@ -255,7 +256,7 @@ LLM 从主题、体裁、韵部开始独立生成。RAG 仅作软提示,不直�
 ## 🤝 贡献
 
 ```bash
-git clone https://github.com/anthropics/shici
+git clone https://github.com/EZfan/shici
 cd shici
 uv sync --all-extras
 uv run pytest -m "not integration and not eval"
@@ -292,7 +293,7 @@ MIT — 见 [LICENSE](LICENSE)。
 </p>
 
 <p align="center">
-  <a href="https://star-history.com/#anthropics/shici&Date">
-    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=anthropics/shici&type=Date">
+  <a href="https://star-history.com/#EZfan/shici&Date">
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=EZfan/shici&type=Date">
   </a>
 </p>

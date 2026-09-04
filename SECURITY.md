@@ -9,7 +9,7 @@
 ## Reporting a vulnerability
 
 If you discover a security vulnerability in shici, please report it by
-opening a [private security advisory](https://github.com/anthropics/shici/security/advisories/new)
+opening a [private security advisory](https://github.com/EZfan/shici/security/advisories/new)
 on GitHub.
 
 Please **do not** file a public issue for security problems.

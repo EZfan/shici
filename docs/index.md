@@ -72,4 +72,4 @@ shici 站在巨人的肩膀上:
 
 ## License
 
-MIT — see [LICENSE](https://github.com/anthropics/shici/blob/main/LICENSE).
+MIT — see [LICENSE](https://github.com/EZfan/shici/blob/main/LICENSE).

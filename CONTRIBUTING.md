@@ -6,7 +6,7 @@ We welcome contributions to shici! Please read our
 ## Quick start
 
 ```bash
-git clone https://github.com/anthropics/shici
+git clone https://github.com/EZfan/shici
 cd shici
 uv sync --all-extras --dev
 uv run pytest
@@ -15,7 +15,7 @@ uv run pytest
 ## Issues
 
 Found a bug or have a feature idea? Open an
-[issue](https://github.com/anthropics/shici/issues) — please include:
+[issue](https://github.com/EZfan/shici/issues) — please include:
 
 - shici version (`shici --version`)
 - Operating system

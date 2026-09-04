@@ -73,11 +73,11 @@ shici = "shici.cli:app"
 shici-tui = "shici.app:run"
 
 [project.urls]
-Homepage = "https://github.com/anthropics/shici"
+Homepage = "https://github.com/EZfan/shici"
 Documentation = "https://anthropics.github.io/shici"
-Repository = "https://github.com/anthropics/shici"
-Issues = "https://github.com/anthropics/shici/issues"
-Changelog = "https://github.com/anthropics/shici/blob/main/CHANGELOG.md"
+Repository = "https://github.com/EZfan/shici"
+Issues = "https://github.com/EZfan/shici/issues"
+Changelog = "https://github.com/EZfan/shici/blob/main/CHANGELOG.md"
 
 [build-system]
 requires = ["hatchling"]

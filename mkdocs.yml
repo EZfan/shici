@@ -1,8 +1,8 @@
 site_name: shici — 诗词格律引擎
 site_description: Generate classical Chinese poetry under strict tonal & rhyme rules, powered by LLMs.
 site_url: https://anthropics.github.io/shici/
-repo_url: https://github.com/anthropics/shici
-repo_name: anthropics/shici
+repo_url: https://github.com/EZfan/shici
+repo_name: EZfan/shici
 edit_uri: edit/main/docs/
 
 theme:
@@ -88,7 +88,7 @@ markdown_extensions:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/anthropics/shici
+      link: https://github.com/EZfan/shici
       name: shici on GitHub
     - icon: fontawesome/brands/python
       link: https://pypi.org/project/shici/

@@ -10,7 +10,7 @@ and [Hatchling](https://hatch.pypa.io/) as the build backend.
 
 ```bash
 # Clone the repo
-git clone https://github.com/anthropics/shici
+git clone https://github.com/EZfan/shici
 cd shici
 
 # Install all extras (dev, llm, tui, rag)
@@ -130,8 +130,8 @@ When vendoring new data:
 ## Code of conduct
 
 This project follows the [Contributor Covenant](https://www.contributor-covenant.org/).
-See [CODE_OF_CONDUCT.md](https://github.com/anthropics/shici/blob/main/CODE_OF_CONDUCT.md).
+See [CODE_OF_CONDUCT.md](https://github.com/EZfan/shici/blob/main/CODE_OF_CONDUCT.md).
 
 ## Questions?
 
-Open an [issue](https://github.com/anthropics/shici/issues) — happy to help.
+Open an [issue](https://github.com/EZfan/shici/issues) — happy to help.
