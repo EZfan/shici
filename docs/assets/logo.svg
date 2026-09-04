@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" width="800" height="200" role="img" aria-label="shici - classical Chinese poetry CLI">
+  <title>shici</title>
+  <desc>An AI CLI for generating classical Chinese poetry under strict tonal rules</desc>
+
+  <!-- Definitions: filters, gradients, patterns -->
+  <defs>
+    <!-- Subtle rice paper texture using filter -->
+    <filter id="paperTexture" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="3"/>
+      <feColorMatrix values="0 0 0 0 0.85
+                             0 0 0 0 0.78
+                             0 0 0 0 0.62
+                             0 0 0 0.06 0"/>
+      <feComposite in2="SourceGraphic" operator="in"/>
+    </filter>
+
+    <!-- Slight ink roughness for text -->
+    <filter id="inkRough" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves="1" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="0.6"/>
+    </filter>
+
+    <!-- Paper background gradient -->
+    <linearGradient id="paperBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F6E7C1"/>
+      <stop offset="100%" stop-color="#EFE0B4"/>
+    </linearGradient>
+
+    <!-- Seal vermilion gradient -->
+    <radialGradient id="sealRed" cx="35%" cy="35%" r="75%">
+      <stop offset="0%" stop-color="#D34A24"/>
+      <stop offset="70%" stop-color="#C73E1D"/>
+      <stop offset="100%" stop-color="#A82E14"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Rice paper background -->
+  <rect width="800" height="200" fill="url(#paperBg)"/>
+  <rect width="800" height="200" fill="#F4E4BC" opacity="0.5" filter="url(#paperTexture)"/>
+
+  <!-- Subtle border frame, like a scroll -->
+  <rect x="14" y="14" width="772" height="172" fill="none" stroke="#8B7355" stroke-width="1.2" opacity="0.35"/>
+  <rect x="20" y="20" width="760" height="160" fill="none" stroke="#8B7355" stroke-width="0.5" opacity="0.25"/>
+
+  <!-- Decorative brushstroke top-left: simplified "诗" hint -->
+  <g opacity="0.18" transform="translate(40, 28)">
+    <text x="0" y="38" font-family="'Songti SC','STSong','SimSun','Noto Serif SC',serif"
+          font-size="48" font-weight="700" fill="#2C2C2C" letter-spacing="6">诗</text>
+  </g>
+
+  <!-- Main wordmark "shici" in serif -->
+  <g filter="url(#inkRough)">
+    <text x="135" y="135"
+          font-family="'Songti SC','STSong','SimSun','Noto Serif SC','Source Han Serif SC',serif"
+          font-size="120" font-weight="700"
+          fill="#2C2C2C"
+          letter-spacing="2">shici</text>
+  </g>
+
+  <!-- Subtle baseline accent -->
+  <line x1="135" y1="160" x2="555" y2="160" stroke="#2C2C2C" stroke-width="0.8" opacity="0.45"/>
+
+  <!-- Small tagline beneath -->
+  <text x="138" y="183"
+        font-family="'Songti SC','STSong','SimSun','Noto Serif SC',serif"
+        font-size="14" fill="#5C4A3A" letter-spacing="6" opacity="0.85">
+    Classical Poetry Engine
+  </text>
+
+  <!-- Vermilion seal on the right -->
+  <g transform="translate(640, 60)">
+    <!-- Outer square seal (traditional 印章 look) -->
+    <rect x="0" y="0" width="100" height="100" rx="3" ry="3" fill="url(#sealRed)"/>
+    <!-- Worn texture overlay -->
+    <rect x="0" y="0" width="100" height="100" rx="3" ry="3" fill="#7A1F0F" opacity="0.18" filter="url(#paperTexture)"/>
+
+    <!-- Seal characters 诗词 in seal-script style -->
+    <g font-family="'Songti SC','STSong','SimSun','Noto Serif SC',serif"
+       font-weight="900" fill="#F6E7C1" text-anchor="middle">
+      <!-- 诗 (top-left) -->
+      <text x="30" y="56" font-size="48">诗</text>
+      <!-- 词 (bottom-right) -->
+      <text x="72" y="96" font-size="48">词</text>
+    </g>
+
+    <!-- Inner divider line of square seal -->
+    <line x1="50" y1="6" x2="50" y2="94" stroke="#F6E7C1" stroke-width="1" opacity="0.35"/>
+    <line x1="6" y1="50" x2="94" y2="50" stroke="#F6E7C1" stroke-width="1" opacity="0.35"/>
+
+    <!-- Slight chip on edges for authenticity -->
+    <circle cx="6" cy="6" r="1.2" fill="#A82E14"/>
+    <circle cx="94" cy="94" r="1.2" fill="#A82E14"/>
+  </g>
+
+  <!-- Tiny ink dots for atmosphere -->
+  <g fill="#2C2C2C" opacity="0.55">
+    <circle cx="585" cy="60" r="1.2"/>
+    <circle cx="592" cy="72" r="0.8"/>
+    <circle cx="100" cy="170" r="1.0"/>
+    <circle cx="780" cy="35" r="1.0"/>
+    <circle cx="775" cy="175" r="1.3"/>
+  </g>
+</svg>

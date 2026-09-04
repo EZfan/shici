@@ -1,0 +1,20 @@
+name: Feature Request
+description: Suggest a new feature for shici
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: shici version
+      placeholder: "0.1.0"
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      placeholder: What feature would you like to see?
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation
+      placeholder: Why is this feature needed?

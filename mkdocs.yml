@@ -1,0 +1,112 @@
+site_name: shici — 诗词格律引擎
+site_description: Generate classical Chinese poetry under strict tonal & rhyme rules, powered by LLMs.
+site_url: https://anthropics.github.io/shici/
+repo_url: https://github.com/anthropics/shici
+repo_name: anthropics/shici
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  language: zh
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep orange
+      accent: red
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep orange
+      accent: red
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.indexes
+    - toc.follow
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+    - search.suggest
+    - search.highlight
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            docstring_style: google
+            show_source: true
+            show_root_heading: true
+            show_root_full_path: false
+            show_symbol_type_heading: true
+            show_symbol_type_toc: true
+            members_order: source
+            separate_signature: true
+            show_signature_annotations: true
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - meta
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python:name:material.extensions.emoji.to_svg
+  - pymdownx.magiclink
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.caret
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/anthropics/shici
+      name: shici on GitHub
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/shici/
+      name: shici on PyPI
+  generator: false
+
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - Prosody Engine: prosody.md
+  - LLM Backends: llm-backends.md
+  - Architecture: architecture.md
+  - Ablation Study: ablation.md
+  - Contributing: contributing.md
+  - CLI Reference:
+      - Commands: reference/cli.md
+
+extra_css:
+  - assets/extra.css
+
+copyright: Copyright &copy; 2026 shici contributors. Licensed under MIT.

@@ -1,0 +1,30 @@
+{
+  "name": "忆江南",
+  "pinyin": "yi jiang nan",
+  "category": "小令",
+  "stanzas": 1,
+  "lines": 5,
+  "tone_pattern": [
+    "中平中仄仄平平",
+    "中仄中平中仄平",
+    "中仄中平中仄平",
+    "中平中仄仄平平",
+    "中平中仄仄平平"
+  ],
+  "lengths_per_line": [7, 7, 7, 5, 7],
+  "rhyme_positions": [0, 1, 2, 3, 4],
+  "rhyme_group_required": "any",
+  "duilian_required": [[1, 2]],
+  "notes": "单调二十七字，五句三平韵。第二、三句一般对仗（例：'日出江花红胜火，春来江水绿如蓝'）。本调即《望江南》《江南好》《梦江南》《梦仙词》《步虚词》。",
+  "example": {
+    "author": "白居易",
+    "title": "忆江南",
+    "content": [
+      "江南好",
+      "风景旧曾谙",
+      "日出江花红胜火",
+      "春来江水绿如蓝",
+      "能不忆江南"
+    ]
+  }
+}

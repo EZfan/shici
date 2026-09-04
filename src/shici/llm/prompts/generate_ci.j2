@@ -1,0 +1,57 @@
+{% extends "system.j2" %}
+
+{% block extra_rules %}
+## 当前任务:依词牌填写一首词
+
+- 词牌:**{{ cipai }}**
+- 题材:『{{ theme }}』
+{%- if title %}
+- 题目:**{{ title }}**(词之题目与词牌名不同)
+{%- else %}
+- 请自拟题目,体现题材旨要
+{%- endif %}
+{%- if keywords %}
+- 关键词: {{ keywords | join("、") }}
+{%- endif %}
+{%- if reference %}
+- 参考风格或前人作品:『{{ reference }}』
+{%- endif %}
+
+## 词牌说明
+
+词牌 **{{ cipai }}** 具有固定之字数、平仄与叶韵位置。请按词牌格律填词,包含:
+- 全词的字数与分阕(上下阕或单调)
+- 押韵位置(句末韵脚)
+- 平仄标注
+
+## 严格要求
+
+1. 字数与分句须严格符合 **{{ cipai }}** 词牌格律。
+2. 押韵:韵脚位置使用同一韵部({{ cipai }} 多押平声韵)。韵脚行 ``rhyme_group`` 填入韵部;非韵脚行填 ``null``。
+3. 平仄逐字标注,长度与字数严格对齐。
+4. 上阕宜起兴,下阕宜转折收束;或单调则须一气贯之。
+5. 词以婉约见长,可化用典故、化用前人句意,但须自然不露斧凿。
+6. ``theme`` 用一句话概括词意,不超过 40 字。
+7. ``notes`` 可注明词作背景或章法,不超过 200 字。
+
+## 输出 JSON Schema
+
+```json
+{
+  "cipai": "{{ cipai }}",
+  "title": "string | null",
+  "lines": [
+    {
+      "text": "string",
+      "tone_pattern": ["平" | "仄" | "中", ...],
+      "rhyme_group": "上平一东 | ... | null"
+    }
+  ],
+  "rhyme_groups": [
+    "上平一东 | ... | null"
+  ],
+  "theme": "string",
+  "notes": "string | null"
+}
+```
+{% endblock %}

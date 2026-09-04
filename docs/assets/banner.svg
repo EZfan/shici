@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" width="1280" height="640" role="img" aria-label="shici banner - classical Chinese poetry CLI">
+  <title>shici banner</title>
+  <desc>Banner for shici: an AI CLI for generating classical Chinese poetry under strict tonal rules</desc>
+
+  <defs>
+    <!-- Rice paper texture -->
+    <filter id="paperTex" x="0%" y="0%" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.78" numOctaves="2" seed="5"/>
+      <feColorMatrix values="0 0 0 0 0.78
+                             0 0 0 0 0.68
+                             0 0 0 0 0.48
+                             0 0 0 0.08 0"/>
+      <feComposite in2="SourceGraphic" operator="in"/>
+    </filter>
+
+    <!-- Larger mottled stains -->
+    <filter id="stainTex" x="0%" y="0%" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="2" seed="11"/>
+      <feColorMatrix values="0 0 0 0 0.55
+                             0 0 0 0 0.45
+                             0 0 0 0 0.30
+                             0 0 0 0.05 0"/>
+      <feComposite in2="SourceGraphic" operator="in"/>
+    </filter>
+
+    <!-- Ink text displacement -->
+    <filter id="inkDisplace" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="1.0" numOctaves="1" seed="9"/>
+      <feDisplacementMap in="SourceGraphic" scale="0.8"/>
+    </filter>
+
+    <!-- Paper background gradient -->
+    <linearGradient id="paperGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F8EBC9"/>
+      <stop offset="50%" stop-color="#F4E4BC"/>
+      <stop offset="100%" stop-color="#EBD9A8"/>
+    </linearGradient>
+
+    <!-- Seal vermilion gradient -->
+    <radialGradient id="sealVerm" cx="35%" cy="35%" r="80%">
+      <stop offset="0%" stop-color="#D34A24"/>
+      <stop offset="70%" stop-color="#C73E1D"/>
+      <stop offset="100%" stop-color="#A02E14"/>
+    </radialGradient>
+
+    <!-- Vertical mist gradient -->
+    <linearGradient id="mist" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F4E4BC" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#F4E4BC" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#F4E4BC" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Paper background -->
+  <rect width="1280" height="640" fill="url(#paperGrad)"/>
+  <rect width="1280" height="640" filter="url(#paperTex)"/>
+  <rect width="1280" height="640" filter="url(#stainTex)" opacity="0.85"/>
+
+  <!-- Decorative inner border, like a hanging scroll frame -->
+  <rect x="40" y="40" width="1200" height="560" fill="none" stroke="#8B7355" stroke-width="2" opacity="0.4"/>
+  <rect x="52" y="52" width="1176" height="536" fill="none" stroke="#8B7355" stroke-width="0.8" opacity="0.3"/>
+
+  <!-- Faint vertical classical poetry, scattered in background -->
+  <g font-family="'Songti SC','STSong','SimSun','Noto Serif SC',serif"
+     font-weight="700" fill="#2C2C2C" opacity="0.10">
+
+    <!-- Li Bai: 床前明月光 -->
+    <text x="80" y="130" font-size="64" letter-spacing="12">床前明月光</text>
+    <text x="120" y="180" font-size="20" letter-spacing="8">— 李白</text>
+
+    <!-- Su Shi: 明月几时有 -->
+    <text x="900" y="130" font-size="64" letter-spacing="12">明月几时有</text>
+    <text x="940" y="180" font-size="20" letter-spacing="8">— 苏轼</text>
+
+    <!-- Wang Wei: 红豆生南国 -->
+    <text x="80" y="500" font-size="64" letter-spacing="12">红豆生南国</text>
+    <text x="120" y="548" font-size="20" letter-spacing="8">— 王维</text>
+
+    <!-- Additional poetry hint: 春眠不觉晓 -->
+    <text x="780" y="500" font-size="64" letter-spacing="12">春眠不觉晓</text>
+    <text x="820" y="548" font-size="20" letter-spacing="8">— 孟浩然</text>
+  </g>
+
+  <!-- Faint ink washes (large soft circles) -->
+  <g opacity="0.05" fill="#2C2C2C">
+    <circle cx="200" cy="320" r="220"/>
+    <circle cx="1080" cy="340" r="200"/>
+  </g>
+
+  <!-- Decorative mist band behind central content -->
+  <rect x="120" y="240" width="1040" height="220" fill="url(#mist)" opacity="0.4"/>
+
+  <!-- ===== Central composition: scaled logo + tagline ===== -->
+  <g transform="translate(640, 320)">
+    <!-- Big wordmark -->
+    <g filter="url(#inkDisplace)">
+      <text x="0" y="0"
+            text-anchor="middle"
+            font-family="'Songti SC','STSong','SimSun','Noto Serif SC','Source Han Serif SC',serif"
+            font-size="160" font-weight="700"
+            fill="#2C2C2C"
+            letter-spacing="4">shici</text>
+    </g>
+
+    <!-- Brushstroke divider under wordmark -->
+    <g transform="translate(0, 30)">
+      <line x1="-220" y1="0" x2="220" y2="0" stroke="#2C2C2C" stroke-width="1.5" opacity="0.5"/>
+      <circle cx="-220" cy="0" r="2" fill="#2C2C2C" opacity="0.7"/>
+      <circle cx="220" cy="0" r="2" fill="#2C2C2C" opacity="0.7"/>
+    </g>
+
+    <!-- Chinese tagline -->
+    <text x="0" y="80"
+          text-anchor="middle"
+          font-family="'Songti SC','STSong','SimSun','Noto Serif SC',serif"
+          font-size="32" font-weight="600"
+          fill="#2C2C2C"
+          letter-spacing="14">古典诗词格律引擎 · 让 AI 写出严谨的诗</text>
+
+    <!-- English subtitle -->
+    <text x="0" y="118"
+          text-anchor="middle"
+          font-family="'Songti SC','STSong','SimSun','Noto Serif SC',serif"
+          font-size="18"
+          fill="#5C4A3A"
+          letter-spacing="3"
+          opacity="0.85">An AI CLI for generating classical Chinese poetry under strict tonal rules</text>
+  </g>
+
+  <!-- Vermilion seal, top-right, like an artist's chop -->
+  <g transform="translate(1060, 80)">
+    <rect x="0" y="0" width="140" height="140" rx="4" ry="4" fill="url(#sealVerm)"/>
+    <rect x="0" y="0" width="140" height="140" rx="4" ry="4" fill="#7A1F0F" opacity="0.18" filter="url(#paperTex)"/>
+
+    <g font-family="'Songti SC','STSong','SimSun','Noto Serif SC',serif"
+       font-weight="900" fill="#F6E7C1" text-anchor="middle">
+      <text x="42" y="78" font-size="68">诗</text>
+      <text x="100" y="128" font-size="68">词</text>
+    </g>
+
+    <line x1="70" y1="8" x2="70" y2="132" stroke="#F6E7C1" stroke-width="1.2" opacity="0.35"/>
+    <line x1="8" y1="70" x2="132" y2="70" stroke="#F6E7C1" stroke-width="1.2" opacity="0.35"/>
+
+    <circle cx="8" cy="8" r="1.6" fill="#A02E14"/>
+    <circle cx="132" cy="132" r="1.6" fill="#A02E14"/>
+  </g>
+
+  <!-- Decorative brush corner accent (lower-left) -->
+  <g transform="translate(80, 540)" opacity="0.45">
+    <path d="M 0 60 Q 40 30 120 50 T 240 30" fill="none" stroke="#2C2C2C" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M 0 70 Q 30 50 80 60" fill="none" stroke="#2C2C2C" stroke-width="0.8" stroke-linecap="round"/>
+  </g>
+
+  <!-- Tiny scattered ink dots -->
+  <g fill="#2C2C2C" opacity="0.5">
+    <circle cx="180" cy="80" r="1.6"/>
+    <circle cx="192" cy="92" r="1"/>
+    <circle cx="220" cy="600" r="1.4"/>
+    <circle cx="1100" cy="610" r="1.6"/>
+    <circle cx="1115" cy="600" r="1"/>
+    <circle cx="640" cy="560" r="1.2"/>
+    <circle cx="660" cy="568" r="0.9"/>
+  </g>
+
+  <!-- Tonal-rule motif: ping/ze symbol hints (decorative 〇●) -->
+  <g transform="translate(640, 80)" fill="#C73E1D" opacity="0.7">
+    <circle cx="0" cy="0" r="4"/>
+    <circle cx="20" cy="0" r="4"/>
+    <circle cx="40" cy="0" r="4"/>
+    <circle cx="60" cy="0" r="4"/>
+  </g>
+  <g transform="translate(580, 80)" fill="#2C2C2C" opacity="0.7">
+    <circle cx="0" cy="0" r="4"/>
+    <circle cx="20" cy="0" r="4"/>
+    <circle cx="40" cy="0" r="4"/>
+    <circle cx="60" cy="0" r="4"/>
+    <circle cx="80" cy="0" r="4"/>
+    <circle cx="100" cy="0" r="4"/>
+    <circle cx="120" cy="0" r="4"/>
+  </g>
+</svg>

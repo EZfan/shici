@@ -1,0 +1,46 @@
+/* shici docs — extra styles */
+
+:root {
+  --md-primary-fg-color:        #c73e1d;
+  --md-primary-fg-color--light: #d65a3a;
+  --md-primary-fg-color--dark:  #a32e10;
+  --md-accent-fg-color:         #c73e1d;
+}
+
+[data-md-color-scheme="default"] {
+  --md-default-bg-color: #f4e4bc;
+  --md-default-fg-color: #2c2c2c;
+}
+
+/* Subtle rice paper texture */
+.md-main__inner {
+  background-image:
+    radial-gradient(circle at 25% 25%, rgba(199, 62, 29, 0.04), transparent 40%),
+    radial-gradient(circle at 75% 75%, rgba(199, 62, 29, 0.04), transparent 40%);
+}
+
+.md-typeset h1 {
+  color: #c73e1d;
+  font-weight: 700;
+}
+
+.md-typeset h2 {
+  border-bottom: 2px solid #c73e1d;
+  padding-bottom: 0.3em;
+}
+
+.md-typeset code {
+  background-color: rgba(199, 62, 29, 0.08);
+  color: #a32e10;
+}
+
+/* Inline tag-like badge */
+.md-typeset .badge {
+  display: inline-block;
+  padding: 0.1em 0.4em;
+  background-color: #c73e1d;
+  color: #f4e4bc;
+  border-radius: 0.2em;
+  font-size: 0.85em;
+  font-weight: 600;
+}

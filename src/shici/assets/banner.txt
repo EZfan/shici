@@ -1,0 +1,9 @@
+_____  _
+  / ___|| |__   ___ _   _ _ __
+  \___ \| '_ \ / _ \ | | | '_ \
+   ___) | | | |  __/ |_| | |_) |
+  |____/|_| |_|\___|\__,_| .__/
+                         |_|
+
+  Classical Poetry Engine  -  shici v0.1.0
+  Let AI write verse under strict tonal rules.

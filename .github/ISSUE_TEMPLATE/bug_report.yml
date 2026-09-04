@@ -1,0 +1,15 @@
+name: Bug Report
+description: Report a bug in shici
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: shici version
+      placeholder: "0.1.0"
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      placeholder: What happened?

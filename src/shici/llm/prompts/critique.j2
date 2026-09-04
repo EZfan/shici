@@ -1,0 +1,55 @@
+{% extends "system.j2" %}
+
+{% block extra_rules %}
+## 当前任务:鉴赏这首诗并打分
+
+### 鉴赏对象
+
+- 体裁:**{{ poem.form }}**
+- 题目:{% if poem.title %}《{{ poem.title }}》{% else %}无题目{% endif %}
+- 题材:『{{ poem.theme }}』
+
+### 诗作内容
+
+{%- for line in poem.lines %}
+- 第 {{ loop.index }} 句:「{{ line.text }}」 (平仄: {{ line.tone_pattern | map(attribute='value') | join('·') }}){% if line.rhyme_group %} · 韵: {{ line.rhyme_group.value }}{% endif %}
+{%- endfor %}
+
+{%- if poem.notes %}
+
+创作札记: {{ poem.notes }}
+{%- endif %}
+
+### 鉴赏维度
+
+请按以下维度分别打分(**0–10 分**,允许小数):
+
+| 维度 | 说明 |
+| ---- | ---- |
+| ``prosody_score``    | 平仄、押韵、对仗、格律之合规与精当 |
+| ``imagery_score``    | 意象、意境、情景交融、含蓄蕴藉 |
+| ``originality_score``| 立意、章法、化用出新、自铸新词 |
+| ``overall_score``    | 综合以上三者之总分,可作加权(格律 4、意象 4、创造性 2) |
+
+### 评论要求
+
+1. ``comments`` 给 3–6 条具体评论,指出佳处与瑕疵,可逐联点评。
+2. ``highlights`` 列出 0–3 联/句"佳句",每条即为原句文本。
+3. ``allusions`` 列出该诗化用到的典故或前人句意,每条说明出处与化用意图,无则空列表。
+4. 语气**真诚、含蓄、专业**,既不溢美,亦不苛求。
+5. 如原作格律存在明显违律,在 ``comments`` 中首条提出。
+
+## 输出 JSON Schema
+
+```json
+{
+  "overall_score": 0.0,
+  "prosody_score": 0.0,
+  "imagery_score": 0.0,
+  "originality_score": 0.0,
+  "comments": ["..."],
+  "highlights": ["..."],
+  "allusions": ["..."]
+}
+```
+{% endblock %}

@@ -1,0 +1,195 @@
+/* shici TUI theme — 宣纸 (rice paper) + 朱砂红 (cinnabar) aesthetic.
+ *
+ * Color palette:
+ *   #f4e4bc  rice-paper yellow  (base background)
+ *   #f9efd0  lighter paper      (panels)
+ *   #f6e7c1  header band
+ *   #c73e1d  cinnabar red       (primary accent)
+ *   #d65a3a  bright cinnabar    (hover)
+ *   #a32e10  deep cinnabar      (focus)
+ *   #8b7355  warm brown         (secondary text)
+ *   #2c2c2c  ink black          (body text)
+ *   #2a82b8  indigo blue        (平 tone)
+ *   #d68f00  amber              (warnings)
+ */
+
+Screen {
+    background: #f4e4bc;
+    color: #2c2c2c;
+}
+
+Header {
+    background: #c73e1d;
+    color: #f4e4bc;
+    text-style: bold;
+}
+
+Footer {
+    background: #c73e1d;
+    color: #f4e4bc;
+}
+
+#title {
+    color: #c73e1d;
+    text-style: bold;
+    background: #f6e7c1;
+    padding: 1 2;
+    border: round #c73e1d;
+    content-align: center middle;
+}
+
+#subtitle {
+    color: #8b7355;
+    text-style: italic;
+    padding: 1 2;
+    content-align: center middle;
+}
+
+#banner {
+    color: #c73e1d;
+    text-style: bold;
+    padding: 1 2;
+    content-align: center middle;
+}
+
+.menu-button {
+    background: #c73e1d;
+    color: #f4e4bc;
+    border: round #c73e1d;
+    width: 100%;
+    height: 3;
+    content-align: center middle;
+    text-style: bold;
+    margin: 1 1;
+}
+
+.menu-button:hover {
+    background: #d65a3a;
+}
+
+.menu-button:focus {
+    background: #a32e10;
+    color: #f9efd0;
+}
+
+.poem-panel {
+    background: #f9efd0;
+    border: double #c73e1d;
+    padding: 1 2;
+    margin: 1 1;
+}
+
+.poem-line {
+    color: #2c2c2c;
+    text-style: bold;
+}
+
+.tone-ping {
+    color: #2a82b8;
+    text-style: bold;
+}
+
+.tone-ze {
+    color: #c73e1d;
+    text-style: bold;
+}
+
+.tone-flexible {
+    color: #8b7355;
+}
+
+.issue-error {
+    color: #c73e1d;
+    text-style: bold;
+}
+
+.issue-warning {
+    color: #d68f00;
+    text-style: bold;
+}
+
+.issue-info {
+    color: #8b7355;
+}
+
+.status-bar {
+    dock: bottom;
+    background: #c73e1d;
+    color: #f4e4bc;
+    height: 1;
+    padding: 0 1;
+}
+
+.form-label {
+    color: #8b7355;
+    text-style: bold;
+    padding: 0 1;
+    margin-top: 1;
+}
+
+Input {
+    background: #f9efd0;
+    border: round #c73e1d;
+    color: #2c2c2c;
+    margin: 0 1;
+}
+
+Input:focus {
+    border: round #a32e10;
+    background: #f6e7c1;
+}
+
+Select {
+    background: #f9efd0;
+    border: round #c73e1d;
+    color: #2c2c2c;
+    margin: 0 1;
+}
+
+TextArea {
+    background: #f9efd0;
+    border: round #c73e1d;
+    color: #2c2c2c;
+    margin: 0 1;
+}
+
+TextArea:focus {
+    border: round #a32e10;
+}
+
+ListView {
+    background: #f9efd0;
+    border: round #c73e1d;
+    color: #2c2c2c;
+    margin: 0 1;
+    height: 1fr;
+}
+
+ListItem {
+    padding: 0 1;
+}
+
+ListItem:hover {
+    background: #f6e7c1;
+}
+
+ListItem.--highlight {
+    background: #c73e1d;
+    color: #f4e4bc;
+}
+
+.detail-panel {
+    background: #f9efd0;
+    border: double #c73e1d;
+    padding: 1 2;
+    margin: 1 1;
+    height: 1fr;
+}
+
+.notice {
+    background: #f9efd0;
+    border: round #d68f00;
+    color: #2c2c2c;
+    padding: 1 2;
+    margin: 1 1;
+}

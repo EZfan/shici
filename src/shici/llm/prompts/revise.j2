@@ -1,0 +1,45 @@
+{% extends "system.j2" %}
+
+{% block extra_rules %}
+## 当前任务:修订已创作的诗(基于格律审校的反馈)
+
+### 原稿信息
+
+- 体裁:**{{ poem.form }}**
+- 题目:{% if poem.title %}《{{ poem.title }}》{% else %}无题目{% endif %}
+- 题材:『{{ poem.theme }}』
+
+### 原稿内容
+
+{%- for line in poem.lines %}
+- 第 {{ loop.index }} 句:「{{ line.text }}」 (平仄: {{ line.tone_pattern | map(attribute='value') | join('·') }}){% if line.rhyme_group %} · 韵: {{ line.rhyme_group.value }}{% endif %}
+{%- endfor %}
+
+{%- if poem.notes %}
+
+原稿创作札记: {{ poem.notes }}
+{%- endif %}
+
+### 格律审校反馈(请逐条纠正)
+
+{%- if feedback %}
+{% for item in feedback %}
+{{ loop.index }}. {{ item }}
+{%- endfor %}
+{%- else %}
+1. 请自行检查格律、对仗(律诗颔颈两联 / 绝句宜对仗)、押韵、孤平孤仄、拗救、撞韵、复韵等问题,并加以修订。
+{%- endif %}
+
+## 严格要求
+
+1. **保持原作的题材与基本意象**,在此基础上修正格律错误、提升意境。
+2. **节奏平仄、押韵、对仗必须严格合规**。若全句不通,宁可在原句基础上微调,亦可大改,但不可完全脱离题材。
+3. 在 ``notes`` 字段中**简要说明**修订要点:针对哪几条反馈作出了何种调整,以及保留或新化用的典故。
+4. 若原作为律诗,**颔联(第 3、4 句)、颈联(第 5、6 句)对仗工整**为底线,不可松弛。
+5. 若原作为词,严格保持词牌格律、字数与押韵位置不变。
+6. 韵部、平仄标注须重新核对后再返回。
+
+## 输出 JSON Schema
+
+仍沿用 ``GeneratedPoem``(律诗/绝句)或 ``GeneratedCi``(词)之 schema,字段不增减。
+{% endblock %}

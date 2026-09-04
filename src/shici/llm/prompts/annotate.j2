@@ -1,0 +1,56 @@
+{% extends "system.j2" %}
+
+{% block extra_rules %}
+## 当前任务:逐句注疏这首诗
+
+### 注疏对象
+
+- 体裁:**{{ poem.form }}**
+- 题目:{% if poem.title %}《{{ poem.title }}》{% else %}无题目{% endif %}
+- 题材:『{{ poem.theme }}』
+
+### 诗作内容
+
+{%- for line in poem.lines %}
+- 第 {{ loop.index }} 句:「{{ line.text }}」 (平仄: {{ line.tone_pattern | map(attribute='value') | join('·') }}){% if line.rhyme_group %} · 韵: {{ line.rhyme_group.value }}{% endif %}
+{%- endfor %}
+
+{%- if poem.notes %}
+
+创作札记: {{ poem.notes }}
+{%- endif %}
+
+## 注疏要求
+
+对每一句进行**三类注解**:
+
+1. **字词释义**:解释难字、生僻字、一字多义、词类活用;遇常见字可不释。
+2. **典故出处**:若有化用,指明出自何书何人何篇;无则说明"无典"。
+3. **意境分析**:以简短的鉴赏语言点明此句之意境、与前后句之关系、所营造之情境。
+
+### 输出字段
+
+使用 ``GeneratedPoem`` 的扩展模式,``notes`` 字段替换为结构化注疏列表(``annotations``),形式:
+
+```json
+{
+  "form": "{{ poem.form }}",
+  "title": "...",
+  "lines": [...],
+  "theme": "...",
+  "annotations": [
+    {
+      "line_no": 1,
+      "text": "原句",
+      "lexical": ["字词释义条目", "..."],
+      "allusions": ["典故条目", "..."],
+      "imagery": "意境分析段落"
+    }
+  ]
+}
+```
+
+每行的 ``lexical`` 至少 0 条、``allusions`` 至少 0 条、``imagery`` 严格 1 段(不超过 120 字)。
+
+字数与平仄保持原样,仅在 ``annotations`` 中提供注释。
+{% endblock %}
